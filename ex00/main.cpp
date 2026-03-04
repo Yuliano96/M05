@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ypacileo <ypacileo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 17:00:05 by ypacileo          #+#    #+#             */
-/*   Updated: 2026/03/01 18:37:30 by ypacileo         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:19:58 by yuliano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int main()
 {
     try
     {
-        std::cout<<"======== a =======\n";
+        std::cout << "======== a =======" << std::endl;
         Bureaucrat a("Alejandro", -1);
-        std::cout<< a;
+        std::cout << a << std::endl;
 
     }
     catch(const std::exception& e)
@@ -28,9 +28,9 @@ int main()
     }
     try
     {
-        std::cout<<"========b=========\n";
+        std::cout << "========b=========" << std::endl;
         Bureaucrat b("pedro", 1);
-        std::cout<< b;
+        std::cout << b << std::endl;
     }
     catch(const std::exception& e)
     {
@@ -38,17 +38,29 @@ int main()
     }
     try
     {
-        std::cout<<"========c=========\n";
+        std::cout << "========c=========" << std::endl;
         Bureaucrat b ("pedro", 1);
         Bureaucrat c;
         c = b;
+        std::cout << c << std::endl;
         c.increaseGrade();
-        std::cout<< c;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    std::cout << "========================" << std::endl;
+    try
+    {
+        Bureaucrat b("pedro sanchez", 149);
+        b.decreaseGrade();
+        std::cout << b << std::endl;
+        b.decreaseGrade();
+        std::cout << b << std::endl;
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
     
-   
 }

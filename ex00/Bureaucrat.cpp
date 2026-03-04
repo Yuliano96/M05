@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ypacileo <ypacileo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:13:00 by ypacileo          #+#    #+#             */
-/*   Updated: 2026/03/01 18:37:18 by ypacileo         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:13:56 by yuliano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 	return "Grade too low";
 }
 
-const char *Bureaucrat::GradeTooHigExection::what() const throw()
+const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return "Grade too high";
 }
@@ -26,13 +26,13 @@ const char *Bureaucrat::GradeTooHigExection::what() const throw()
 int Bureaucrat::checkGrade(int _grade)
 {
 	if (_grade < 1)
-		throw GradeTooHigExection();
+		throw GradeTooHighException();
 	if (_grade > 150)
 		throw GradeTooLowException();
 	return _grade;	
 }
 
-Bureaucrat::Bureaucrat():name("bureaucrat"), grade(0)
+Bureaucrat::Bureaucrat():name("Default"), grade(150)
 {
 	std::cout << "Default constructor\n";
 }
@@ -58,7 +58,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 	return *this;
 }
 
-const std::string Bureaucrat::getName() const
+const std::string &Bureaucrat::getName() const
 {
 	return (name);
 }
@@ -75,12 +75,16 @@ Bureaucrat::~Bureaucrat()
 
 void Bureaucrat::increaseGrade()
 {
-	grade--;
-	checkGrade(grade);	
+	grade = checkGrade(grade - 1);
+}
+
+void Bureaucrat::decreaseGrade()
+{
+	grade = checkGrade(grade + 1);
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat &obj)
 {
-	os << obj.getName() << " bureaucrat grade " << obj.getGrade()<< std::endl;
+	os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
 	return os;
 }
