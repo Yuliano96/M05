@@ -6,12 +6,13 @@
 /*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 15:13:00 by ypacileo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:12:54 by yuliano          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:11:47 by yuliano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include <iostream>
+#include "Form.hpp"
 
 const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
@@ -32,7 +33,7 @@ int Bureaucrat::checkGrade(int _grade)
 	return _grade;	
 }
 
-Bureaucrat::Bureaucrat():name("Default"), grade(150)
+Bureaucrat::Bureaucrat():name("DefaultBureaucrat"), grade(150)
 {
 	std::cout << "Bureaucrat Default constructor\n";
 }
@@ -81,6 +82,23 @@ void Bureaucrat::increaseGrade()
 void Bureaucrat::decreaseGrade()
 {
 	grade = checkGrade(grade + 1);
+}
+
+void Bureaucrat::signForm(Form &form)
+{
+
+	try
+	{
+		form.beSigned(*this);
+		std::cout<<this->name << " signed "<< form.getName()<< std::endl;
+	}
+	catch(const std::exception& e)
+	{
+
+		std::cerr << name << " couldn't sign "<< form.getName() 
+					<< " because "<<e.what() << std::endl;;
+	}
+	
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat &obj)

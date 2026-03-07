@@ -6,7 +6,7 @@
 /*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 13:20:41 by ypacileo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:10:29 by yuliano          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:03:18 by yuliano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #define BUREAUCRAT_HPP
 
 #include <string>
-#include <exception>
 #include <ostream>
 
+
+class Form;
 
 class Bureaucrat
 {
@@ -28,6 +29,17 @@ class Bureaucrat
 	
 	public:
 	
+	Bureaucrat();
+	Bureaucrat(const std::string &_name, int _grade);
+	Bureaucrat(const Bureaucrat &other);
+	Bureaucrat &operator=(const Bureaucrat &other);
+	~Bureaucrat();
+	const std::string &getName() const;
+	int getGrade() const;
+	void increaseGrade();
+	void decreaseGrade();
+	void signForm(Form &form);
+
 	class GradeTooHighException:public std::exception
 	{
 		public:
@@ -39,16 +51,6 @@ class Bureaucrat
 		public:
 		const char *what() const throw();
 	};
-
-	Bureaucrat();
-	Bureaucrat(const std::string &_name, int _grade);
-	Bureaucrat(const Bureaucrat &other);
-	Bureaucrat &operator=(const Bureaucrat &other);
-	~Bureaucrat();
-	const std::string &getName() const;
-	int getGrade() const;
-	void increaseGrade();
-	void decreaseGrade();
 };
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& obj);
