@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ypacileo <ypacileo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 10:01:56 by yuliano           #+#    #+#             */
-/*   Updated: 2026/03/07 23:00:42 by yuliano          ###   ########.fr       */
+/*   Updated: 2026/03/08 18:22:33 by ypacileo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ const char *AForm::GradeTooHighException::what() const throw()
 {
 	return "Grade too high";
 }
+
+const char *AForm::FormNotSignedException::what() const throw()
+{
+	return "form is not signed";
+}
+
 
 int AForm::checkGrade(int grade)
 {
@@ -95,18 +101,21 @@ void AForm::beSigned(const Bureaucrat &bureaucrat)
 		throw GradeTooLowException();
 }
 
-void AForm::execute(const Bureaucrat &execute) const
+void	AForm::execute(Bureaucrat const &executor) const
 {
-	if (!isSigned)
-		throw "The form is not signed\n";
-	delegatesExecution(execute);
+	if (!this->isSigned)
+		throw AForm::FormNotSignedException();
+	if (executor.getGrade() > this->gradeToExecute)
+		throw AForm::GradeTooLowException();
+	this->delegatesExecution();
 }
+
 
 std::ostream &operator<<(std::ostream &os, const AForm &obj)
 {
 	os<<"Form: "<<obj.getName()<<std::endl;
 	os<<"Grade to sign: "<<obj.getGradeToSig()<<std::endl;
-	os<<"Grede to execute: "<<obj.getGradeToExcute()<<std::endl;
+	os<<"Grade to execute: "<<obj.getGradeToExcute()<<std::endl;
 	if (obj.getIsSigned())
 		os<<"Is it signed: "<<"YES\n";
 	else

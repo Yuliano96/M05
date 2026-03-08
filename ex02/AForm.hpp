@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliano <yuliano@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ypacileo <ypacileo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 22:03:38 by yuliano           #+#    #+#             */
-/*   Updated: 2026/03/08 11:01:55 by yuliano          ###   ########.fr       */
+/*   Updated: 2026/03/08 13:42:19 by ypacileo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ class AForm
 	int getGradeToSig() const;
 	int getGradeToExcute() const;
 	void beSigned(const Bureaucrat &bureaucrat);
-	void execute(Bureaucrat const & executor) const;
-	virtual void delegatesExecution(Bureaucrat const &executor) const = 0;
+	void	execute(Bureaucrat const &executor) const;
+	virtual void	delegatesExecution() const = 0;
+	
 	class GradeTooHighException:public std::exception
 	{
 		public:
@@ -48,6 +49,12 @@ class AForm
 	};
 	
 	class GradeTooLowException:public std::exception
+	{
+		public:
+		const char *what() const throw();
+	};
+	
+	class FormNotSignedException:public std::exception
 	{
 		public:
 		const char *what() const throw();
